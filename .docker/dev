@@ -1,0 +1,30 @@
+#!/bin/bash
+
+export USER && export UID
+
+usage() {
+  echo "Usage: ./dev {build|shell|clean}"
+}
+
+build() {
+  docker build \
+    -t fastx:dev \
+    --build-arg DEV_USER_ID=$UID .
+}
+
+shell() {
+  docker run -it --rm \
+    -v $(pwd)/..:/opt/fastx \
+    fastx:dev bash
+}
+
+clean() {
+  docker rmi -f fastx:dev
+}
+
+case $1 in
+  build) build;;
+  shell) shell;;
+  clean) clean;;
+  *) usage;;
+esac
