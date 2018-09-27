@@ -12,7 +12,7 @@ class fastx::server (
   Optional[String] $apt_gpgid = undef,
   Optional[String] $apt_gpgurl = undef,
   Optional[String] $apt_repo = 'main',
-) inherits fastx::params {
+) inherits fastx::server::params {
 
   include ::fastx::server::install
   include ::fastx::server::config

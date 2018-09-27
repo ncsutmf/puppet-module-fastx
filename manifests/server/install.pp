@@ -15,18 +15,18 @@ class fastx::server::install {
         id     => $fastx::server::apt_gpgid,
         source => $fastx::server::apt_gpgurl
       },
-      before   => Package[$fastx::server::packages]
+      before   => Package[$fastx::server::server_packages]
     }
   }
 
-  package { $fastx::server::packages:
+  package { $fastx::server::server_packages:
     ensure => 'latest'
   }
 
   file { "${fastx::server::install_dir}/fastx.version":
     ensure  => 'present',
     content => $::fastx_version,
-    require => Package[$fastx::server::packages],
+    require => Package[$fastx::server::server_packages],
     notify  => Exec['fastx installer']
   }
 
