@@ -5,17 +5,17 @@
 class fastx::server::install {
   if $facts['os']['family'] == 'Debian' {
     apt::source { 'fastx':
-      ensure => $fastx::server::manage_repo ? {
-        true => 'present',
+      ensure   => $fastx::server::manage_repo ? {
+        true  => 'present',
         false => 'absent'
       },
       location => $fastx::server::apt_baseurl,
-      repos => $fastx::server::apt_repo,
-      key => {
-        id => $fastx::server::apt_gpgid,
+      repos    => $fastx::server::apt_repo,
+      key      => {
+        id     => $fastx::server::apt_gpgid,
         source => $fastx::server::apt_gpgurl
       },
-      before => Package[$fastx::server::packages]
+      before   => Package[$fastx::server::packages]
     }
   }
 
@@ -27,11 +27,11 @@ class fastx::server::install {
     ensure  => 'present',
     content => $::fastx_version,
     require => Package[$fastx::server::packages],
-    notify => Exec['fastx installer']
+    notify  => Exec['fastx installer']
   }
 
   exec { 'fastx installer':
     refreshonly => true,
-    command => "${fastx::server::install_dir}/install.sh -q",
+    command     => "${fastx::server::install_dir}/install.sh -q",
   }
 }

@@ -2,11 +2,20 @@
   "name": "mdwheele-fastx",
   "version": "0.1.0",
   "author": "mdwheele",
-  "summary": "",
+  "summary": "Install and configure FastX server and client.",
   "license": "MIT",
-  "source": "",
+  "source": "https://github.com/mdwheele/puppet-module-fastx",
+  "project_page": "https://github.com/mdwheele/puppet-module-fastx",
+  "issues_url": "https://github.com/mdwheele/puppet-module-fastx/issues",
   "dependencies": [
-    {"name":"puppetlabs-stdlib","version_requirement":">= 5.0.0"}
+    {
+      "name": "puppetlabs-apt",
+      "version_requirement": ">= 6.0.0 < 7.0.0"
+    },
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 5.0.0 < 6.0.0"
+    }
   ],
   "operatingsystem_support": [
     {

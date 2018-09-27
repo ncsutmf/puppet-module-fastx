@@ -4,11 +4,11 @@
 #
 class fastx::server::config {
   file { $fastx::server::license_dir:
-    ensure => 'directory',
+    ensure  => 'directory',
     recurse => true,
-    purge  => true,
-    owner  => $fastx::server::fastx_user,
-    group  => $fastx::server::fastx_group,
+    purge   => true,
+    owner   => $fastx::server::fastx_user,
+    group   => $fastx::server::fastx_group,
   }
 
   file { "${fastx::server::license_dir}/${fastx::server::license_server}.lic":
