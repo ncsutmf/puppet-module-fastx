@@ -4,7 +4,7 @@
 #
 # @example
 #   include fastx::params
-class fastx::server::params {
+class fastx::params {
   $web_service_name = 'fastx'
   $manage_user = true
   $manage_group = true
@@ -17,11 +17,12 @@ class fastx::server::params {
 
   case $facts['os']['family'] {
     'Debian': {
-      $client_packages = ['fastx-']
+      $client_packages = ['fastx-client']
       $server_packages = ['alien', 'starnetfastx2']
     }
     'RedHat': {
-      $server_packages = []
+      $client_packages = ['fastx-client']
+      $server_packages = ['StarNetFastX2']
     }
     default: {
       fail("${facts['os']['name']} not supported")

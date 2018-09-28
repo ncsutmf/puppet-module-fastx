@@ -4,7 +4,7 @@
 #
 # @example
 #   include fastx::server
-class fastx::server (
+class fastx::client (
   Optional[String] $license_server = undef,
   Optional[Boolean] $allow_web_sessions = false,
   Optional[Boolean] $manage_repo = false,
@@ -12,20 +12,23 @@ class fastx::server (
   Optional[String] $apt_gpgid = undef,
   Optional[String] $apt_gpgurl = undef,
   Optional[String] $apt_repo = 'main',
-  Optional[String] $yum_baseurl = undef,
-  Optional[String] $yum_gpgurl = undef,
 ) inherits fastx::params {
+  if $manage_repo {
+    if $facts['os']['family'] == 'Debian' {
+      apt::source { 'fastx':
+        ensure   => 'present',
+        location => $apt_baseurl,
+        repos    => $apt_repo,
+        key      => {
+          id     => $apt_gpgid,
+          source => $apt_gpgurl
+        },
+        before   => Package[$fastx::client::client_packages]
+      }
+    }
+  }
 
-  include ::fastx::server::install
-  include ::fastx::server::config
-  include ::fastx::server::service
-
-  anchor { 'fastx::server::start': }
-  anchor { 'fastx::server::end': }
-
-  Anchor['fastx::server::start']
-  -> Class['fastx::server::install']
-  -> Class['fastx::server::config']
-  ~> Class['fastx::server::service']
-  -> Anchor['fastx::server::end']
+  package { $fastx::client::client_packages:
+    ensure => 'latest'
+  }
 }

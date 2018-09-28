@@ -3,19 +3,27 @@
 # @summary A short summary of the purpose of this class
 #
 class fastx::server::install {
-  if $facts['os']['family'] == 'Debian' {
-    apt::source { 'fastx':
-      ensure   => $fastx::server::manage_repo ? {
-        true  => 'present',
-        false => 'absent'
-      },
-      location => $fastx::server::apt_baseurl,
-      repos    => $fastx::server::apt_repo,
-      key      => {
-        id     => $fastx::server::apt_gpgid,
-        source => $fastx::server::apt_gpgurl
-      },
-      before   => Package[$fastx::server::server_packages]
+  if $::fastx::server::manage_repo {
+    if $facts['os']['family'] == 'Debian' {
+      apt::source { 'fastx':
+        ensure   => 'present',
+        location => $fastx::server::apt_baseurl,
+        repos    => $fastx::server::apt_repo,
+        key      => {
+          id     => $fastx::server::apt_gpgid,
+          source => $fastx::server::apt_gpgurl
+        },
+        before   => Package[$fastx::server::server_packages]
+      }
+    } elsif $facts['os']['family'] == 'RedHat' {
+      yumrepo { 'fastx':
+        ensure   => 'present',
+        baseurl  => $fastx::server::yum_baseurl,
+        gpgkey   => $fastx::server::yum_gpgurl,
+        descr    => 'FastX Packages - $releasever',
+        enabled  => '1',
+        gpgcheck => '1',
+      }
     }
   }
 
