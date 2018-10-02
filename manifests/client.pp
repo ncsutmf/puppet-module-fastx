@@ -33,6 +33,7 @@ class fastx::client (
         descr    => 'FastX Packages - $releasever',
         enabled  => '1',
         gpgcheck => '1',
+        before   => Package[$fastx::client::client_packages]
       }
     }
   }
