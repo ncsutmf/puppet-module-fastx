@@ -5,13 +5,13 @@
 # @example
 #   include fastx::server
 class fastx::client (
-  Optional[String] $license_server = undef,
-  Optional[Boolean] $allow_web_sessions = false,
   Optional[Boolean] $manage_repo = false,
   Optional[String] $apt_baseurl = undef,
   Optional[String] $apt_gpgid = undef,
   Optional[String] $apt_gpgurl = undef,
   Optional[String] $apt_repo = 'main',
+  Optional[String] $yum_baseurl = undef,
+  Optional[String] $yum_gpgurl = undef,
 ) inherits fastx::params {
   if $manage_repo {
     if $facts['os']['family'] == 'Debian' {
@@ -24,6 +24,15 @@ class fastx::client (
           source => $apt_gpgurl
         },
         before   => Package[$fastx::client::client_packages]
+      }
+    } elsif $facts['os']['family'] == 'RedHat' {
+      yumrepo { 'fastx':
+        ensure   => 'present',
+        baseurl  => $yum_baseurl,
+        gpgkey   => $yum_gpgurl,
+        descr    => 'FastX Packages - $releasever',
+        enabled  => '1',
+        gpgcheck => '1',
       }
     }
   }
