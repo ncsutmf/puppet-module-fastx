@@ -1,6 +1,6 @@
 Facter.add('fastx_version') do
   setcode do
-    cmd = "/bin/false" # Default to nothing
+    cmd = "/bin/true" # Default to nothing
 
     case Facter.value(:operatingsystem)
     when 'Ubuntu', 'Debian'
