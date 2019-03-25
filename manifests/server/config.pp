@@ -26,7 +26,7 @@ class fastx::server::config {
       password         => '!',
       password_max_age => '-1',
       password_min_age => '-1',
-      shell            => '/sbin/nologin',
+      shell            => $fastx::server::user_shell,
     }
   }
 

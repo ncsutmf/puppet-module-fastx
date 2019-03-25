@@ -19,10 +19,12 @@ class fastx::params {
     'Debian': {
       $client_packages = ['fastx-client']
       $server_packages = ['alien', 'starnetfastx2']
+      $user_shell = '/usr/sbin/nologin'
     }
     'RedHat': {
       $client_packages = ['fastx-client']
       $server_packages = ['StarNetFastX2']
+      $user_shell = '/sbin/nologin'
     }
     default: {
       fail("${facts['os']['name']} not supported")
