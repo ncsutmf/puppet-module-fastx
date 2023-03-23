@@ -6,7 +6,7 @@ Facter.add('fastx_version') do
     when 'Ubuntu', 'Debian'
       cmd = "/usr/bin/dpkg-query --showformat='${Version}' --show starnetfastx2"
     when 'CentOS', 'RedHat', 'Fedora'
-      cmd = '/bin/rpm -q --qf "%{VERSION}" StarNetFastX2'
+      cmd = '/bin/rpm -q StarNetFastX2 > /dev/null && /bin/rpm -q --qf "%{VERSION}" StarNetFastX2 || /bin/rpm -q --qf "%{VERSION}" fastx-server'
     end
 
     Facter::Core::Execution.execute(cmd)
