@@ -11,9 +11,10 @@ class fastx::server::install {
         repos    => $fastx::server::apt_repo,
         key      => {
           id     => $fastx::server::apt_gpgid,
-          source => $fastx::server::apt_gpgurl
+          source => $fastx::server::apt_gpgurl,
         },
-        before   => Package[$fastx::server::server_packages]
+        felease  => $fastx::server::apt_release,
+        before   => Package[$fastx::server::server_packages],
       }
     } elsif $facts['os']['family'] == 'RedHat' {
       yumrepo { 'fastx':

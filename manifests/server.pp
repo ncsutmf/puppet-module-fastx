@@ -12,6 +12,7 @@ class fastx::server (
   Optional[String] $apt_gpgid = undef,
   Optional[String] $apt_gpgurl = undef,
   Optional[String] $apt_repo = 'main',
+  Optional[String] $apt_release = 'stable',
   Optional[String] $yum_baseurl = undef,
   Optional[String] $yum_gpgurl = undef,
 ) inherits fastx::params {
