@@ -13,7 +13,7 @@ class fastx::params {
 
   $install_dir = '/usr/lib/fastx/latest'
   $config_dir = '/etc/fastx'
-  $license_dir = "${install_dir}/var/license"
+  $license_dir = '/var/fastx/license'
 
   $client_packages = ['fastx-client']
   $server_packages = ['fastx-server']
