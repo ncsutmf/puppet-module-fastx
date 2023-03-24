@@ -13,7 +13,7 @@ class fastx::server::install {
           id     => $fastx::server::apt_gpgid,
           source => $fastx::server::apt_gpgurl,
         },
-        felease  => $fastx::server::apt_release,
+        release  => $fastx::server::apt_release,
         before   => Package[$fastx::server::server_packages],
       }
     } elsif $facts['os']['family'] == 'RedHat' {
@@ -32,15 +32,16 @@ class fastx::server::install {
     ensure => 'latest'
   }
 
-  file { "${fastx::server::install_dir}/fastx.version":
-    ensure  => 'present',
-    content => $::fastx_version,
-    require => Package[$fastx::server::server_packages],
-    notify  => Exec['fastx installer']
-  }
+  # this may not be needed any more
+  # file { "${fastx::server::install_dir}/fastx.version":
+  #   ensure  => 'present',
+  #   content => $::fastx_version,
+  #   require => Package[$fastx::server::server_packages],
+  #   notify  => Exec['fastx installer']
+  # }
 
-  exec { 'fastx installer':
-    refreshonly => true,
-    command     => "${fastx::server::install_dir}/install.sh -q",
-  }
+  # exec { 'fastx installer':
+  #   refreshonly => true,
+  #   command     => "${fastx::server::install_dir}/install.sh -q",
+  # }
 }

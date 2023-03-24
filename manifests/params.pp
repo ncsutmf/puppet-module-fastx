@@ -5,25 +5,24 @@
 # @example
 #   include fastx::params
 class fastx::params {
-  $web_service_name = 'fastx'
+  $web_service_name = 'fastx3'
   $manage_user = true
   $manage_group = true
   $fastx_user = 'fastx'
   $fastx_group = 'fastx'
 
-  $install_dir = '/usr/lib/fastx2'
-  $config_dir = "${install_dir}/var/config"
+  $install_dir = '/usr/lib/fastx/latest'
+  $config_dir = '/etc/fastx'
   $license_dir = "${install_dir}/var/license"
+
+  $client_packages = ['fastx-client']
+  $server_packages = ['fastx-server']
 
   case $facts['os']['family'] {
     'Debian': {
-      $client_packages = ['fastx-client']
-      $server_packages = ['alien', 'starnetfastx2']
       $user_shell = '/usr/sbin/nologin'
     }
     'RedHat': {
-      $client_packages = ['fastx-client']
-      $server_packages = ['StarNetFastX2']
       $user_shell = '/sbin/nologin'
     }
     default: {
